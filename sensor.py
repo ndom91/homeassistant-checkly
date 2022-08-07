@@ -58,16 +58,18 @@ class ChecklySensor(ChecklyEntity, SensorEntity):
     @property
     def native_value(self) -> str:
         """Return the status of the check."""
-        # LOGGER.warn(f'NATIVE_VALUE {self.check}')
+        LOGGER.warn(f'NATIVE_VALUE {self.check["name"]} ')
+        LOGGER.warn(f'STATUS {self.check["current_status"]}')
         value = SENSORS_INFO[self.check["current_status"]]["value"]
         LOGGER.warn(f'NATIVE_VALUE {value}')
         return value
-
 
     @property
     def icon(self) -> str:
         """Return the status of the check."""
         # LOGGER.warn(f'ICON {self.check}')
+        LOGGER.warn(f'ICON {self.check["name"]}')
+        LOGGER.warn(f'STATUS {self.check["current_status"]}')
         icon = SENSORS_INFO[self.check["current_status"]]["icon"]
         LOGGER.warn(f'ICON {icon}')
         return icon

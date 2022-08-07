@@ -19,17 +19,17 @@ class ChecklyEntity(CoordinatorEntity):
         self._check = check
         self._attr_device_info = DeviceInfo(
             identifiers={(DOMAIN, str(self.check['id']))},
-            name=self.check['name'],
+            name=self.check["name"],
             manufacturer="Checkly",
-            model=self.check['checkType'],
+            model=self.check["checkType"],
             configuration_url=f"https://app.checklyhq.com/checks/{self.check['id']}",
         )
+        self._attr_unique_id = str(self.check['id'])
 
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
-        LOGGER.warn(f'handle_coordinator_update {self.idx}')
-        self._attr_is_on = self.coordinator.data[self.idx]["state"]
-        # self.async_write_ha_state()
+        LOGGER.warn(f'_handle_coordinator_update {self.idx}')
+        # self._attr_is_on = self.coordinator.data[self.idx]["state"]
 
     @property
     def _checks(self) -> list[ChecklyCheck]:

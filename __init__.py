@@ -99,15 +99,10 @@ class ChecklyCoordinator(DataUpdateCoordinator):
         return 'https://www.checklyhq.com/images/racoon_favicon.png'
 
     async def _async_update_data(self):
-        """Fetch data from API endpoint.
-
-        This is the place to pre-process the data to lookup tables
-        so entities can quickly look up their data.
-        """
+        """Fetch data from API endpoint."""
         try:
             LOGGER.warn('RUNNING ASYNC FETCH JOB...')
             checks = await self.hass.async_add_executor_job(self.api.get_checks)
-            LOGGER.warn(f'CHECKS1 {checks[0]}')
             check_statuses = await self.hass.async_add_executor_job(self.api.get_check_statuses)
 
             for check in checks:
@@ -119,10 +114,7 @@ class ChecklyCoordinator(DataUpdateCoordinator):
                         check["current_status"] = 3
 
         except Exception as err:
-            LOGGER.error(f'ERR1 {err}')
-            raise ConfigEntryAuthFailed from err
-        except Exception as err:
-            LOGGER.error(f'ERR2 {err}')
+            LOGGER.error(f'Data Update Error - {err}')
             raise UpdateFailed(f"Error communicating with API: {err}")
 
         current_checks = {
@@ -142,12 +134,9 @@ class ChecklyCoordinator(DataUpdateCoordinator):
         # If there are new monitors, we should reload the config entry so we can
         # create new devices and entities.
         if self.data and new_checks - {str(check['id']) for check in self.data}:
-            LOGGER.warn(f'SELF_DATA {self.data}')
             self.hass.async_create_task(
                 self.hass.config_entries.async_reload(self._config_entry_id)
             )
             return None
-
-        # self.async_write_ha_state()
 
         return checks
