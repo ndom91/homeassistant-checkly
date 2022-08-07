@@ -22,10 +22,10 @@ class StatusValue(TypedDict):
 
 
 SENSORS_INFO = {
-    0: StatusValue(value="failing", icon="mdi:television-off"),      # failing
-    1: StatusValue(value="degraded", icon="mdi:television"),         # degraded
-    2: StatusValue(value="passing", icon="mdi:television-shimmer"),  # passing
-    3: StatusValue(value="unknown", icon="mdi:question-mark"),       # unknown
+    0: StatusValue(value="failing", icon="mdi:alarm-light-off"),           # failing
+    1: StatusValue(value="degraded", icon="mdi:alarm-light-off-outline"),  # degraded
+    2: StatusValue(value="passing", icon="mdi:alarm-light"),               # passing
+    3: StatusValue(value="unknown", icon="mdi:cloud-question"),            # unknown
 }
 
 
@@ -58,18 +58,9 @@ class ChecklySensor(ChecklyEntity, SensorEntity):
     @property
     def native_value(self) -> str:
         """Return the status of the check."""
-        LOGGER.warn(f'NATIVE_VALUE {self.check["name"]} ')
-        LOGGER.warn(f'STATUS {self.check["current_status"]}')
-        value = SENSORS_INFO[self.check["current_status"]]["value"]
-        LOGGER.warn(f'NATIVE_VALUE {value}')
-        return value
+        return SENSORS_INFO[self.check["current_status"]]["value"]
 
     @property
     def icon(self) -> str:
         """Return the status of the check."""
-        # LOGGER.warn(f'ICON {self.check}')
-        LOGGER.warn(f'ICON {self.check["name"]}')
-        LOGGER.warn(f'STATUS {self.check["current_status"]}')
-        icon = SENSORS_INFO[self.check["current_status"]]["icon"]
-        LOGGER.warn(f'ICON {icon}')
-        return icon
+        return SENSORS_INFO[self.check["current_status"]]["icon"]

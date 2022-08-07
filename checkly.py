@@ -1,6 +1,6 @@
 import requests
 
-from .const import LOGGER
+from .const import API_BASE_URL
 
 
 class Obj(dict):
@@ -24,7 +24,7 @@ class ChecklyApi():
         self._api_key = key
         self._checkly_account_id = accountId
 
-    def _auth_header(self):
+    def _get_auth_header(self):
         return {
             'accept': 'application/json',
             'Authorization': 'Bearer ' + self._api_key,
@@ -33,18 +33,14 @@ class ChecklyApi():
 
     def get_checks(self):
         """Get all Checkly Checks."""
-        url = 'https://api.checklyhq.com/v1/checks'
-        headers = self._auth_header()
+        url = f'{API_BASE_URL}/checks'
+        headers = self._get_auth_header()
         response = requests.get(url, headers=headers)
-        LOGGER.warn(f'RESP.GET_CHECKS {response}')
-        body = response.json()
-        return body
+        return response.json()
 
     def get_check_statuses(self):
         """Get all Checkly Checks."""
-        url = 'https://api.checklyhq.com/v1/check-statuses'
-        headers = self._auth_header()
+        url = f'{API_BASE_URL}/check-statuses'
+        headers = self._get_auth_header()
         response = requests.get(url, headers=headers)
-        LOGGER.warn(f'RESP.GET_CHECK_STATUSES {response}')
-        body = response.json()
-        return body
+        return response.json()

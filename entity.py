@@ -9,10 +9,8 @@ from .types import ChecklyCheck
 
 
 class ChecklyEntity(CoordinatorEntity):
-    """An entity using CoordinatorEntity."""
     def __init__(self, coordinator, idx, check):
         """Initialize Checkly entities."""
-        """Pass coordinator to CoordinatorEntity."""
         super().__init__(coordinator)
         self.idx = idx
         self.check_id = check["id"]
@@ -51,4 +49,4 @@ class ChecklyEntity(CoordinatorEntity):
     @property
     def check_available(self) -> bool:
         """Return if the check is available."""
-        return bool(self.check.status == 2)
+        return bool(self.check["current_status"] == 2)

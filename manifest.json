@@ -1,8 +1,8 @@
 {
   "domain": "checkly",
   "name": "Checkly",
-  "version": "0.0.1",
-  "documentation": "https://www.home-assistant.io/integrations/checkly",
+  "version": "0.1.0",
+  "documentation": "https://github.com/ndom91/homeassistant-checkly",
   "requirements": ["requests==2.28.1"],
   "codeowners": ["@ndom91"],
   "quality_scale": "",

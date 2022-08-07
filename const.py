@@ -25,4 +25,4 @@ ATTR_TARGET: Final = "target"
 
 API_ATTR_OK: Final = "ok"
 
-API_URL: Final = "https://api.checklyhq.com/v1"
+API_BASE_URL: Final = "https://api.checklyhq.com/v1"

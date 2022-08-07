@@ -9,10 +9,9 @@ from homeassistant.const import CONF_API_KEY
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryAuthFailed
 from homeassistant.helpers import device_registry as dr
-from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
-from .const import API_ATTR_OK, COORDINATOR_UPDATE_INTERVAL, DOMAIN, LOGGER, PLATFORMS, API_URL, CONF_ACCOUNT_ID
+from .const import DOMAIN, LOGGER, PLATFORMS, CONF_ACCOUNT_ID
 from .entity import ChecklyEntity
 from .checkly import ChecklyApi
 
@@ -20,13 +19,10 @@ from .checkly import ChecklyApi
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Config entry example."""
     hass.data.setdefault(DOMAIN, {})
-
     dev_reg = dr.async_get(hass)
 
     accountId: str = entry.data[CONF_ACCOUNT_ID]
     key: str = entry.data[CONF_API_KEY]
-
-    LOGGER.warn(f'accountId: {accountId}, apiKey: {key}')
 
     if not key.startswith("cu"):
         raise ConfigEntryAuthFailed(
@@ -41,21 +37,8 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
         config_entry_id=entry.entry_id,
         dev_reg=dev_reg
     )
-
-    # If the refresh fails, async_config_entry_first_refresh will
-    # raise ConfigEntryNotReady and setup will try again later
-    #
-    # If you do not want to retry setup on failure, use
-    # coordinator.async_refresh() instead
-    #
-    # await coordinator.async_config_entry_first_refresh()
     await coordinator.async_refresh()
-
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
-
-    # async_add_entities(
-    #     ChecklyEntity(coordinator, idx, ent) for idx, ent in enumerate(coordinator.data)
-    # )
 
     return True
 
@@ -131,9 +114,7 @@ class ChecklyCoordinator(DataUpdateCoordinator):
                 ):
                     self._device_registry.async_remove_device(device.id)
 
-        # If there are new monitors, we should reload the config entry so we can
-        # create new devices and entities.
-        if self.data and new_checks - {str(check['id']) for check in self.data}:
+        if self.data:
             self.hass.async_create_task(
                 self.hass.config_entries.async_reload(self._config_entry_id)
             )

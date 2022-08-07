@@ -1,26 +1,16 @@
-""" NOTE: Switch could be used for enabling/disabling Checkly check, for v1 will ignore though"""
+""" NOTE: UNUSED - Switch could be used for enabling/disabling Checkly check"""
 
 """Checkly switch platform."""
-from __future__ import annotations
 
-from typing import Any
 
-from pyuptimerobot import UptimeRobotAuthenticationException, UptimeRobotException
 
-from homeassistant.components.switch import (
-    SwitchDeviceClass,
-    SwitchEntity,
-    SwitchEntityDescription,
-)
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-
 from . import UptimeRobotDataUpdateCoordinator
 from .const import API_ATTR_OK, DOMAIN, LOGGER
 from .entity import UptimeRobotEntity
-
-
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
@@ -63,7 +53,8 @@ class UptimeRobotSwitch(UptimeRobotEntity, SwitchEntity):
             return
 
         if response.status != API_ATTR_OK:
-            LOGGER.error("API exception: %s", response.error.message, exc_info=True)
+            LOGGER.error("API exception: %s",
+                         response.error.message, exc_info=True)
             return
 
         await self.coordinator.async_request_refresh()
