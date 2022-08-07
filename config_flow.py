@@ -47,11 +47,8 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         # if account:
         # await self.async_set_unique_id(str(user_input))
         # self._abort_if_unique_id_configured()
-        LOGGER.warn(f'USER_INPUT {user_input}')
-        # LOGGER.warn(f'USER_INPUT.CONF_API_KEY {user_input[CONF_API_KEY]}')
-        # LOGGER.warn(f'USER_INPUT.CONF_ACCOUNT_ID {user_input[CONF_ACCOUNT_ID]}')
         return self.async_create_entry(
-            title='Checkly API Key',
+            title='Checkly',
             data={
                 CONF_API_KEY: user_input[CONF_API_KEY],
                 CONF_ACCOUNT_ID: user_input[CONF_ACCOUNT_ID]

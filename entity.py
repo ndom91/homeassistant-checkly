@@ -1,15 +1,12 @@
 """Base Checkly entity."""
 from __future__ import annotations
 
-# from pyuptimerobot import UptimeRobotMonitor
+import requests
 
-# from homeassistant.helpers.device_registry import DeviceEntryType
-# from homeassistant.helpers.entity import DeviceInfo, EntityDescription
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.helpers.entity import DeviceInfo
 
-# from . import UptimeRobotDataUpdateCoordinator
-from .const import DOMAIN
+from .const import DOMAIN, LOGGER
 from .types import ChecklyCheck
 
 
@@ -83,25 +80,27 @@ class ChecklyEntity(CoordinatorEntity):
         super().__init__(coordinator)
         self.idx = idx
         # self.entity_description = description
+        self.check_id = check["id"]
         self._check = check
         self._attr_device_info = DeviceInfo(
-            identifiers={(DOMAIN, str(self.check.id))},
-            name=self.check.name,
+            identifiers={(DOMAIN, str(self.check['id']))},
+            name=self.check['name'],
             manufacturer="Checkly",
             # entry_type=DeviceEntryType.SERVICE,
             # model=self.monitor.type.name,
-            configuration_url=f"https://app.checklyhq.com/checks/{self.check.id}",
+            configuration_url=f"https://app.checklyhq.com/checks/{self.check['id']}",
         )
         # self._attr_extra_state_attributes = {
         #     ATTR_TARGET: f"https://app.checklyhq.com/checks/{self.check.id}",
         # }
-        self._attr_unique_id = str(self.check.id)
-        self.api_url = coordinator.api_url
+        self._attr_unique_id = str(self.check['id'])
+        # self.api_url = coordinator.api_url
 
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
+        LOGGER.warn(f'_handle_coordinator_update {self.idx}')
         self._attr_is_on = self.coordinator.data[self.idx]["state"]
-        self.async_write_ha_state()
+        # self.async_write_ha_state()
 
     # async def async_turn_on(self, **kwargs):
     #     """Turn the light on.
@@ -126,7 +125,7 @@ class ChecklyEntity(CoordinatorEntity):
             (
                 check
                 for check in self._checks
-                if str(check.id) == self.entity_description.id
+                if str(check['id']) == self.check_id
             ),
             self._check,
         )

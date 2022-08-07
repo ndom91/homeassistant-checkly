@@ -2,14 +2,14 @@
   "config": {
     "step": {
       "user": {
-        "description": "You need to supply the 'main' API key from Checkly",
+        "description": "You need to supply the API key from Checkly",
         "data": {
           "api_key": "[%key:common::config_flow::data::api_key%]"
         }
       },
       "reauth_confirm": {
         "title": "[%key:common::config_flow::title::reauth%]",
-        "description": "You need to supply a new 'main' API key from Checkly",
+        "description": "You need to supply a new API key from Checkly",
         "data": {
           "api_key": "[%key:common::config_flow::data::api_key%]"
         }

@@ -9,7 +9,6 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-# from . import UptimeRobotDataUpdateCoordinator
 from . import ChecklyCoordinator
 from .const import DOMAIN, LOGGER
 from .entity import ChecklyEntity
@@ -28,6 +27,8 @@ SENSORS_INFO = {
     2: StatusValue(value="up", icon="mdi:television-shimmer"),
     8: StatusValue(value="seems_down", icon="mdi:television-off"),
     9: StatusValue(value="down", icon="mdi:television-off"),
+    'true': StatusValue(value="up", icon="mdi:television"),
+    'false': StatusValue(value="down", icon="mdi:television-off"),
 }
 
 
@@ -38,12 +39,13 @@ async def async_setup_entry(
 ) -> None:
     """Set up the Checkly sensors."""
     coordinator: ChecklyCoordinator = hass.data[DOMAIN][entry.entry_id]
+
     async_add_entities(
         ChecklySensor(
             coordinator,
             SensorEntityDescription(
-                key=str(check.id),
-                name=check.name,
+                key=str(check['id']),
+                name=check['name'],
                 entity_category=EntityCategory.DIAGNOSTIC,
                 device_class="checkly__check_status",
             ),
@@ -59,11 +61,11 @@ class ChecklySensor(ChecklyEntity, SensorEntity):
     @property
     def native_value(self) -> str:
         """Return the status of the check."""
-        LOGGER.warn(self.check)
-        return SENSORS_INFO[self.check.status]["value"]
+        LOGGER.warn(f'NATIVE_VALUE {self.check}')
+        return SENSORS_INFO[self.check['activated']]["value"]
 
     @property
     def icon(self) -> str:
         """Return the status of the check."""
-        LOGGER.warn(self.check)
-        return SENSORS_INFO[self.check.status]["icon"]
+        LOGGER.warn(f'ICON {self.check}')
+        return SENSORS_INFO[self.check['activated']]["icon"]

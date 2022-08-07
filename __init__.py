@@ -1,18 +1,11 @@
 """The Checkly integration."""
 from __future__ import annotations
 
-# from pyuptimerobot import (
-#     UptimeRobot,
-#     UptimeRobotAuthenticationException,
-#     UptimeRobotException,
-#     UptimeRobotMonitor,
-# )
-
-# import logging
 from datetime import timedelta
-import async_timeout
+# import asyncio
+# import json
 
-
+from typing import Any
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_API_KEY
 from homeassistant.core import HomeAssistant
@@ -123,16 +116,11 @@ from .checkly import ChecklyApi
 #         return monitors
 
 
-# _LOGGER = logging.getLogger(__name__)
-
-
-# async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry, async_add_entities):
-
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     """Config entry example."""
     hass.data.setdefault(DOMAIN, {})
 
-    LOGGER.warn(f'entry.data: {entry.data}')
+    dev_reg = dr.async_get(hass)
 
     accountId: str = entry.data[CONF_ACCOUNT_ID]
     key: str = entry.data[CONF_API_KEY]
@@ -146,17 +134,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
 
     api = ChecklyApi(key, accountId)
 
-    # hass.data[DOMAIN][entry.entry_id] = coordinator = ChecklyCoordinator(
-    #     hass,
-    #     api=api,
-    # )
+    hass.data[DOMAIN][entry.entry_id] = coordinator = ChecklyCoordinator(
+        hass,
+        api,
+        config_entry_id=entry.entry_id,
+        dev_reg=dev_reg
+    )
 
-    coordinator = ChecklyCoordinator(hass, api)
-    # assuming API object stored here by __init__.py
-    # api = hass.data[DOMAIN][entry.entry_id]
-
-    # Fetch initial data so we have data when entities subscribe
-    #
     # If the refresh fails, async_config_entry_first_refresh will
     # raise ConfigEntryNotReady and setup will try again later
     #
@@ -166,9 +150,13 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry):
     # await coordinator.async_config_entry_first_refresh()
     await coordinator.async_refresh()
 
+    await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
+
     # async_add_entities(
     #     ChecklyEntity(coordinator, idx, ent) for idx, ent in enumerate(coordinator.data)
     # )
+
+    return True
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -183,16 +171,25 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 class ChecklyCoordinator(DataUpdateCoordinator):
     """Checkly coordinator."""
 
-    def __init__(self, hass, api):
+    data: list[Any]
+    config_entry: ConfigEntry
+
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        api,
+        config_entry_id: str,
+        dev_reg: dr.DeviceRegistry
+    ) -> None:
         """Initialize coordinator."""
         super().__init__(
             hass,
             LOGGER,
-            # Name of the data. For logging purposes.
             name=DOMAIN,
-            # Polling interval. Will only be polled if there are subscribers.
             update_interval=timedelta(seconds=90),
         )
+        self._config_entry_id = config_entry_id
+        self._device_registry = dev_reg
         self.api = api
         self.hass = hass
 
@@ -207,11 +204,52 @@ class ChecklyCoordinator(DataUpdateCoordinator):
         so entities can quickly look up their data.
         """
         try:
+
+            #     args = [
+            #         self.api.get_checks,
+            #         self.api.get_check_statuses,
+            #     ]
+            #
+            #     a = await self.hass.async_add_executor_job(
+            #         asyncio.gather, args
+            #     )
+            #     [self.checks, self.check_statuses]
+            #
+            #     LOGGER.warn(f'CHECKS {a}')
+            #     LOGGER.warn(f'CHECKS {self.checks}')
+            #     LOGGER.warn(f'CHECKS_STATUSES {self.checks_statuses}')
+            #     # self.checks = self.api.get_checks(),
+            #     # self.check_statuses = self.api.get_check_statuses(),
+            #
+            # except Exception as err:
+            #     # Raising ConfigEntryAuthFailed will cancel future updates
+            #     # and start a config flow with SOURCE_REAUTH (async_step_reauth)
+            #     LOGGER.error(f'ERR0 {err}')
+            #     raise ConfigEntryAuthFailed from err
+
+            # WORKING (SORT OF)
             # Note: asyncio.TimeoutError and aiohttp.ClientError are already
             # handled by the data update coordinator.
-            LOGGER.warn(f'hassssss {self.hass}')
-            async with async_timeout.timeout(10):
-                return await self.api.get_checks()
+            # LOGGER.warn(f'hassssss {self.hass}')
+            # async with async_timeout.timeout(10):
+            LOGGER.warn('RUNNING ASYNC FETCH JOB...')
+
+            # TODO: FIX THIS!
+            # checks = await asyncio.run_coroutine_threadsafe(
+            #     self.api.get_checks(), self.hass.loop
+            # ).result()
+            checks = await self.hass.async_add_executor_job(self.api.get_checks)
+
+            LOGGER.warn(f'CHECKS1 {checks}')
+
+            check_statuses = await self.hass.async_add_executor_job(self.api.get_check_statuses)
+
+            LOGGER.warn(f'CHECK_STATUSES1 {check_statuses}')
+
+            # LOGGER.warn(type(checks))
+            # checks = await self.hass.async_create_task(self.api.get_checks())
+
+            # LOGGER.warn(f'CHECKS: {checks}')
         except Exception as err:
             # Raising ConfigEntryAuthFailed will cancel future updates
             # and start a config flow with SOURCE_REAUTH (async_step_reauth)
@@ -220,3 +258,30 @@ class ChecklyCoordinator(DataUpdateCoordinator):
         except Exception as err:
             LOGGER.error(f'ERR2 {err}')
             raise UpdateFailed(f"Error communicating with API: {err}")
+
+        current_checks = {
+            list(device.identifiers)[0][1]
+            for device in dr.async_entries_for_config_entry(
+                self._device_registry, self._config_entry_id
+            )
+        }
+        new_checks = {str(check['id']) for check in checks}
+        if stale_checks := current_checks - new_checks:
+            for check_id in stale_checks:
+                if device := self._device_registry.async_get_device(
+                    {(DOMAIN, check_id)}
+                ):
+                    self._device_registry.async_remove_device(device.id)
+
+        # If there are new monitors, we should reload the config entry so we can
+        # create new devices and entities.
+        if self.data and new_checks - {str(check['id']) for check in self.data}:
+            LOGGER.warn(f'SELF_DATA {self.data}')
+            self.hass.async_create_task(
+                self.hass.config_entries.async_reload(self._config_entry_id)
+            )
+            return None
+
+        # self.async_write_ha_state()
+
+        return checks
