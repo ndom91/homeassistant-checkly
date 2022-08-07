@@ -1,6 +1,7 @@
 {
   "domain": "checkly",
   "name": "Checkly",
+  "version": "0.0.1",
   "documentation": "https://www.home-assistant.io/integrations/checkly",
   "requirements": ["requests==2.28.1"],
   "codeowners": ["@ndom91"],

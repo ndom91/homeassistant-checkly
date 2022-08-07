@@ -10,7 +10,7 @@ Homeassistant integration to add sensors for your Checkly API and Browser checks
 
 ```bash
 $ cd <config_dir>/custom_components
-$ git clone https://github.com/ndom91/homeassistant-checkly.git
+$ git clone https://github.com/ndom91/homeassistant-checkly.git checkly
 ```
 
 2. Add this to your sensor configuration. For example, in `configuration.yaml`.

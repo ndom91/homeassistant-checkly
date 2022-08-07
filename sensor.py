@@ -9,9 +9,10 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import EntityCategory
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from . import UptimeRobotDataUpdateCoordinator
-from .const import DOMAIN
-from .entity import UptimeRobotEntity
+# from . import UptimeRobotDataUpdateCoordinator
+from . import ChecklyCoordinator
+from .const import DOMAIN, LOGGER
+from .entity import ChecklyEntity
 
 
 class StatusValue(TypedDict):
@@ -36,31 +37,33 @@ async def async_setup_entry(
     async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the Checkly sensors."""
-    coordinator: UptimeRobotDataUpdateCoordinator = hass.data[DOMAIN][entry.entry_id]
+    coordinator: ChecklyCoordinator = hass.data[DOMAIN][entry.entry_id]
     async_add_entities(
-        UptimeRobotSensor(
+        ChecklySensor(
             coordinator,
             SensorEntityDescription(
-                key=str(monitor.id),
-                name=monitor.friendly_name,
+                key=str(check.id),
+                name=check.name,
                 entity_category=EntityCategory.DIAGNOSTIC,
-                device_class="uptimerobot__monitor_status",
+                device_class="checkly__check_status",
             ),
-            monitor=monitor,
+            check=check,
         )
-        for monitor in coordinator.data
+        for check in coordinator.data
     )
 
 
-class UptimeRobotSensor(UptimeRobotEntity, SensorEntity):
+class ChecklySensor(ChecklyEntity, SensorEntity):
     """Representation of a Checkly sensor."""
 
     @property
     def native_value(self) -> str:
-        """Return the status of the monitor."""
-        return SENSORS_INFO[self.monitor.status]["value"]
+        """Return the status of the check."""
+        LOGGER.warn(self.check)
+        return SENSORS_INFO[self.check.status]["value"]
 
     @property
     def icon(self) -> str:
-        """Return the status of the monitor."""
-        return SENSORS_INFO[self.monitor.status]["icon"]
+        """Return the status of the check."""
+        LOGGER.warn(self.check)
+        return SENSORS_INFO[self.check.status]["icon"]
