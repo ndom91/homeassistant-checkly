@@ -4,7 +4,7 @@
             "failing": "Failing",
             "degraded": "Degraded",
             "passing": "Passing",
-            "unknown": "Unknown",
+            "unknown": "Unknown"
         }
     }
 }
