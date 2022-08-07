@@ -1,11 +1,10 @@
 {
     "state": {
         "checkly__check_status": {
-            "down": "Down",
-            "not_checked_yet": "Not checked yet",
-            "pause": "Pause",
-            "seems_down": "Seems down",
-            "up": "Up"
+            "failing": "Failing",
+            "degraded": "Degraded",
+            "passing": "Passing",
+            "unknown": "Unknown",
         }
     }
 }

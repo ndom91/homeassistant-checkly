@@ -18,14 +18,14 @@
                 "data": {
                     "api_key": "API kulcs"
                 },
-                "description": "Meg kell adnia egy \u00faj \u201ef\u0151\u201d API-kulcsot az UptimeRobott\u00f3l",
+                "description": "Meg kell adnia egy \u00faj \u201ef\u0151\u201d API-kulcsot az Checklyt\u00f3l",
                 "title": "Integr\u00e1ci\u00f3 \u00fajb\u00f3li hiteles\u00edt\u00e9se"
             },
             "user": {
                 "data": {
                     "api_key": "API kulcs"
                 },
-                "description": "Meg kell adnia a \u201ef\u0151\u201d API-kulcsot az UptimeRobott\u00f3l"
+                "description": "Meg kell adnia a \u201ef\u0151\u201d API-kulcsot az Checklyt\u00f3l"
             }
         }
     }

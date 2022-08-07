@@ -18,14 +18,14 @@
                 "data": {
                     "api_key": "API-Schl\u00fcssel"
                 },
-                "description": "Du musst einen neuen Haupt-API-Schl\u00fcssel von UptimeRobot bereitstellen",
+                "description": "Du musst einen neuen Haupt-API-Schl\u00fcssel von Checkly bereitstellen",
                 "title": "Integration erneut authentifizieren"
             },
             "user": {
                 "data": {
                     "api_key": "API-Schl\u00fcssel"
                 },
-                "description": "Du musst den Haupt-API-Schl\u00fcssel von UptimeRobot bereitstellen"
+                "description": "Du musst den Haupt-API-Schl\u00fcssel von Checkly bereitstellen"
             }
         }
     }

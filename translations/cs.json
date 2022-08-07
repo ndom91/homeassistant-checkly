@@ -17,14 +17,14 @@
                 "data": {
                     "api_key": "Kl\u00ed\u010d API"
                 },
-                "description": "Je t\u0159eba zadat nov\u00fd kl\u00ed\u010d API \u010dten\u00ed od spole\u010dnosti Uptime Robot.",
+                "description": "Je t\u0159eba zadat nov\u00fd kl\u00ed\u010d API \u010dten\u00ed od spole\u010dnosti Checkly.",
                 "title": "Znovu ov\u011b\u0159it integraci"
             },
             "user": {
                 "data": {
                     "api_key": "Kl\u00ed\u010d API"
                 },
-                "description": "Mus\u00edte zadat kl\u00ed\u010d API pro \u010dten\u00ed od spole\u010dnosti Uptime Robot."
+                "description": "Mus\u00edte zadat kl\u00ed\u010d API pro \u010dten\u00ed od spole\u010dnosti Checkly."
             }
         }
     }

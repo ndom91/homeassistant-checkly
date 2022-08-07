@@ -27,7 +27,7 @@
                     "api_key": "API Key",
                     "account_id": "Checkly Account ID"
                 },
-                "description": "You need to supply the API key from Checkly"
+                "description": "You need to supply the API key and Account ID from Checkly"
             }
         }
     }

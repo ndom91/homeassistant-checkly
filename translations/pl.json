@@ -18,14 +18,14 @@
                 "data": {
                     "api_key": "Klucz API"
                 },
-                "description": "Musisz poda\u0107 nowy \"g\u0142\u00f3wny\" klucz API od Uptime Robot",
+                "description": "Musisz poda\u0107 nowy klucz API od Checkly",
                 "title": "Ponownie uwierzytelnij integracj\u0119"
             },
             "user": {
                 "data": {
                     "api_key": "Klucz API"
                 },
-                "description": "Musisz poda\u0107 \"g\u0142\u00f3wny\" klucz API od Uptime Robot"
+                "description": "Musisz poda\u0107 klucz API od Checkly"
             }
         }
     }

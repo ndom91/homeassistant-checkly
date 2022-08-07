@@ -18,14 +18,14 @@
                 "data": {
                     "api_key": "API-sleutel"
                 },
-                "description": "U moet een nieuwe 'hoofd'-API-sleutel van UptimeRobot opgeven",
+                "description": "U moet een nieuwe API-sleutel van Checkly opgeven",
                 "title": "Integratie herauthenticeren"
             },
             "user": {
                 "data": {
                     "api_key": "API-sleutel"
                 },
-                "description": "U moet de 'hoofd' API-sleutel van UptimeRobot opgeven"
+                "description": "U moet de API-sleutel van Checkly opgeven"
             }
         }
     }

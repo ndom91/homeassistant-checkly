@@ -18,14 +18,14 @@
                 "data": {
                     "api_key": "API v\u00f5ti"
                 },
-                "description": "Pead sisestama uue UptimeRoboti peamise API-v\u00f5tme",
+                "description": "Pead sisestama uue Checklyi peamise API-v\u00f5tme",
                 "title": "Taastuvasta sidumine"
             },
             "user": {
                 "data": {
                     "api_key": "API v\u00f5ti"
                 },
-                "description": "Pead sisestama UptimeRoboti peamise API-v\u00f5tme"
+                "description": "Pead sisestama Checklyi peamise API-v\u00f5tme"
             }
         }
     }

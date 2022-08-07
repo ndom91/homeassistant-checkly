@@ -18,14 +18,14 @@
                 "data": {
                     "api_key": "Kunci API"
                 },
-                "description": "Anda perlu menyediakan kunci API 'main' yang baru dari UptimeRobot",
+                "description": "Anda perlu menyediakan kunci APIyang baru dari Checkly",
                 "title": "Autentikasi Ulang Integrasi"
             },
             "user": {
                 "data": {
                     "api_key": "Kunci API"
                 },
-                "description": "Anda perlu menyediakan kunci API 'main' dari UptimeRobot"
+                "description": "Anda perlu menyediakan kunci APIdari Checkly"
             }
         }
     }

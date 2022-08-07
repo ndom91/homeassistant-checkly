@@ -18,14 +18,14 @@
                 "data": {
                     "api_key": "Chiave API"
                 },
-                "description": "Devi fornire una nuova chiave API 'principale' da UptimeRobot",
+                "description": "Devi fornire una nuova chiave API da Checkly",
                 "title": "Autentica nuovamente l'integrazione"
             },
             "user": {
                 "data": {
                     "api_key": "Chiave API"
                 },
-                "description": "Devi fornire la chiave API 'principale' da UptimeRobot"
+                "description": "Devi fornire la chiave API da Checkly"
             }
         }
     }

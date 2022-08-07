@@ -18,7 +18,7 @@
                 "data": {
                     "api_key": "API Key"
                 },
-                "description": "Debes proporcionar una nueva clave API de solo lectura de Uptime Robot",
+                "description": "Debes proporcionar una nueva clave API de solo lectura de Checkly",
                 "title": "Volver a autenticar la integraci\u00f3n"
             },
             "user": {

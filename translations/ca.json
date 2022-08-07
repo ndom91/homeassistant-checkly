@@ -18,14 +18,14 @@
                 "data": {
                     "api_key": "Clau API"
                 },
-                "description": "Has de proporcionar una nova clau API 'principal' d'UptimeRobot",
+                "description": "Has de proporcionar una nova clau API 'principal' d'Checkly",
                 "title": "Reautenticaci\u00f3 de la integraci\u00f3"
             },
             "user": {
                 "data": {
                     "api_key": "Clau API"
                 },
-                "description": "Has de proporcionar la clau API 'principal' d'UptimeRobot"
+                "description": "Has de proporcionar la clau API 'principal' d'Checkly"
             }
         }
     }
