@@ -4,6 +4,8 @@
 
 > Heavily based off of the [UptimeRobot](https://github.com/home-assistant/core/tree/dev/homeassistant/components/uptimerobot) Integration ❤️
 
+![Screenshot](screenshot.png)
+
 ## 🏗 Installation
 
 1. Clone the repository into your `/custom_components` directory.
