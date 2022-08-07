@@ -30,6 +30,13 @@ class ChecklyEntity(CoordinatorEntity):
         # self._attr_is_on = self.coordinator.data[self.idx]["state"]
 
     @property
+    def extra_state_attributes(self):
+        """Return the state attributes."""
+        state_attrs = {}
+        state_attrs["friendly_name"] = self.check["name"]
+        return state_attrs
+
+    @property
     def _checks(self) -> list[ChecklyCheck]:
         """Return all checks."""
         return self.coordinator.data or []
