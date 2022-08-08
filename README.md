@@ -2,8 +2,6 @@
 
 [Home Assistant](https://www.home-assistant.io/) integration to add sensors for your Checkly API and Browser checks!
 
-> Heavily based off of the [UptimeRobot](https://github.com/home-assistant/core/tree/dev/homeassistant/components/uptimerobot) Integration ❤️
-
 ![Screenshot](screenshot.png)
 
 ## 🏗 Installation
@@ -28,9 +26,13 @@ To add your Checks to Home Assistant, you have to add the custom integration as 
 
 Now you should have sensors for the `passing`/`failing` state for each of your checks available in your Home Assistant. You can now create automations based off of these, or just display them on your dashboard. 
 
+This will poll Checkly every 90s for updates. If you want this to be user adjustable, please open an issue. 
+
 ## 👷 Contributing
 
-We are happy to accept any and all contributions.
+> Initially based off of the [UptimeRobot](https://github.com/home-assistant/core/tree/dev/homeassistant/components/uptimerobot) Integration ❤️
+
+We are happy to accept most contributions. Please open a PR!
 
 ## 📝 License
 
