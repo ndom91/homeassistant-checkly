@@ -1,5 +1,7 @@
 # Checkly
 
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
+
 [Home Assistant](https://www.home-assistant.io/) integration to add sensors for your Checkly API and Browser checks!
 
 ![Screenshot](screenshot.png)
