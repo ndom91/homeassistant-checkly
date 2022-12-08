@@ -1,8 +1,9 @@
 {
   "domain": "checkly",
   "name": "Checkly",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "documentation": "https://github.com/ndom91/homeassistant-checkly",
+  "issue_tracker": "https://github.com/ndom91/homeassistant-checkly/issues",
   "requirements": ["requests==2.28.1"],
   "codeowners": ["@ndom91"],
   "quality_scale": "gold",
