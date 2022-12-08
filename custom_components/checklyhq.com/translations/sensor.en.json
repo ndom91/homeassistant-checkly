@@ -1,0 +1,10 @@
+{
+    "state": {
+        "checkly__check_status": {
+            "failing": "Failing",
+            "degraded": "Degraded",
+            "passing": "Passing",
+            "unknown": "Unknown"
+        }
+    }
+}

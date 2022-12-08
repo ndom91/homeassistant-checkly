@@ -1,0 +1,20 @@
+class ChecklyCheck:
+    id: str
+    checkType: str
+    name: str
+    frequency: int
+    frequencyOffset: int
+    activated: bool
+    muted: bool
+    shouldFail: bool
+    alertChannels: list[str]
+    locations: list[str]
+    accountId: str
+    script: str
+    imports: list[str]
+    created_at: str
+    updated_at: str
+    environmentVariables: list[str]
+    doubleCheck: bool
+    tags: list
+    sslCheckDomain: str
