@@ -84,7 +84,7 @@ class ChecklyCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         """Fetch data from API endpoint."""
         try:
-            LOGGER.warn('RUNNING ASYNC FETCH JOB...')
+            # LOGGER.warn('RUNNING ASYNC FETCH JOB...')
             checks = await self.hass.async_add_executor_job(self.api.get_checks)
             check_statuses = await self.hass.async_add_executor_job(self.api.get_check_statuses)
 

@@ -26,7 +26,7 @@ class ChecklyEntity(CoordinatorEntity):
 
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
-        LOGGER.warn(f'_handle_coordinator_update {self.idx}')
+        # LOGGER.warn(f'_handle_coordinator_update {self.idx}')
         # self._attr_is_on = self.coordinator.data[self.idx]["state"]
 
     @property
