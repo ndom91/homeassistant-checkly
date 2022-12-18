@@ -1,12 +1,19 @@
 # Checkly
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://github.com/hacs/integration)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-41BDF5.svg?style=for-the-badge)](https://github.com/hacs/integration)
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=ndom91&repository=homeassistant-checkly&category=integration)
 
 [Home Assistant](https://www.home-assistant.io/) integration to add sensors for your Checkly API and Browser checks!
 
 ![Screenshot](screenshot.png)
 
-## 🏗 Installation
+## 🚧 Installation
+
+1. The integration can be found in HACS by searching for 'Checkly'.
+
+2. Select it and chose "Download".
+
+### 🏗 Manual Installation
 
 1. Clone the repository into your `/custom_components` directory.
 
@@ -15,7 +22,7 @@ $ cd <config_dir>/custom_components
 $ git clone https://github.com/ndom91/homeassistant-checkly.git checkly
 ```
 
-Once you've cloned this into the `custom_components` directory, the rest of the configuration can be done in the Home Assistant UI.
+2. Once you've cloned this into the `custom_components` directory, restart HomeAssistant.
 
 ## ⚙ Configuration
 
