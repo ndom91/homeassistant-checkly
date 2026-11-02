@@ -109,9 +109,16 @@ class ChecklyCoordinator(DataUpdateCoordinator):
         new_checks = {str(check['id']) for check in checks}
         if stale_checks := current_checks - new_checks:
             for check_id in stale_checks:
-                if device := self._device_registry.async_get_device(
-                    {(DOMAIN, check_id)}
-                ):
+                # async_get_device is deprecated since HA 2026.8 (removed in 2027.8)
+                if hasattr(self._device_registry, "async_get_device_by_identifier"):
+                    device = self._device_registry.async_get_device_by_identifier(
+                        (DOMAIN, check_id), self._config_entry_id
+                    )
+                else:
+                    device = self._device_registry.async_get_device(
+                        {(DOMAIN, check_id)}
+                    )
+                if device:
                     self._device_registry.async_remove_device(device.id)
 
         if self.data:
